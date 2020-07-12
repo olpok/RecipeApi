@@ -66,3 +66,41 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Structure
+
+App
+- user
+
+LoginForm
+- error
+- loading
+- < onConnect(user)
+
+Site
+- page
+- ingredients
+- recipes
+- currentRecipe
+
+Recipes
+- > recipes
+
+RecipeDetail
+- > id
+- > recipe
+
+RecipeEditForm
+- > recipe
+- > ingredients
+- < onSubmit(recipe, newRecipe)
+
+Ingredients
+- > ingredients
+- < onUpdate(ingredient, newIngredient)
+- < onDelete(ingredient)
+- < onCreate(ingredient)
+
+RecipeCreateForm
+- > ingredients
+- < onSubmit(newRecipe)
