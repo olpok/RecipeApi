@@ -10,18 +10,23 @@ export function Site() {
         ingredients,
         fetchIngredients,
         deleteIngredient,
+        updateIngredient,
+        createIngredient,
     } = useIngredients()
 
     let content = null
     if (page === 'ingredients') {
-        content = <Ingredients ingredients={ingredients} onDelete={deleteIngredient} />
+        content = <Ingredients ingredients={ingredients} onDelete={deleteIngredient}
+            onUpdate={updateIngredient}
+            onCreate={createIngredient}
+        />
     }
 
     useEffect(function () {
         if (page === 'ingredients') {
             fetchIngredients()
         }
-    }, [page])
+    }, [page, fetchIngredients])
 
     return <>
         <NavBar currentPage={page} onClick={setPage} />
@@ -39,7 +44,7 @@ function NavBar({ currentPage, onClick }) {
         return className;
     }
     return <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
-        <a href="" className="navbar-brand">Recettes</a>
+        <a href="#recipes" className="navbar-brand" onClick={() => onClick('recipes')}>Recettes</a>
         <ul className="navbar-nav mr-auto">
             <li className={navClass('recipes')}>
                 <a href="#recipes" className="nav-link" onClick={() => onClick('recipes')}>Recettes</a>
