@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Ingredients } from './Ingredients/Ingredients'
+import { Recipes } from './Recipes/Recipes'
+import { Recipe } from './Recipes/Recipe'
 import { useIngredients } from '../hooks/ingredients'
+import { useRecipes } from '../hooks/recipes'
 import { useEffect } from 'react'
 
 export function Site() {
 
-    const [page, setPage] = useState('ingredients')
+    const [page, setPage] = useState('recipes')
     const {
         ingredients,
         fetchIngredients,
@@ -14,23 +17,40 @@ export function Site() {
         createIngredient,
     } = useIngredients()
 
+    const {
+        recipes,
+        recipe,
+        deselectRecipe,
+        fetchRecipes,
+        fetchRecipe,
+    } = useRecipes()
+
     let content = null
     if (page === 'ingredients') {
         content = <Ingredients ingredients={ingredients} onDelete={deleteIngredient}
             onUpdate={updateIngredient}
             onCreate={createIngredient}
         />
+    } else if (page === 'recipes') {
+        content = <Recipes recipes={recipes} onClick={fetchRecipe} />
     }
 
     useEffect(function () {
         if (page === 'ingredients') {
             fetchIngredients()
         }
+        if (page === 'recipes') {
+            fetchRecipes()
+        }
     }, [page, fetchIngredients])
 
     return <>
         <NavBar currentPage={page} onClick={setPage} />
-        {content}
+        <div className="container">
+            {recipe ? <Recipe recipe={recipe} onClose={deselectRecipe} /> : null}
+            {content}
+        </div>
+
     </>
 }
 
