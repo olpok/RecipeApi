@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useCallback } from "react";
 import { apiFetch } from "../utils/api";
 
 function reducer(state, action) {
@@ -27,34 +27,34 @@ export function useIngredients() {
     })
     return {
         ingredients: state.ingredients,
-        fetchIngredients: async function () {
+        fetchIngredients: useCallback(async function () {
             if (state.loading || state.ingredients) {
                 return;
             }
             dispatch({ type: 'FETCHING_INGREDIENTS' })
             const ingredients = await apiFetch('/ingredients')
             dispatch({ type: 'SET_INGREDIENTS', payload: ingredients })
-        },
-        deleteIngredient: async function (ingredient) {
-            await apiFetch('/ingredients' + ingredient.id, {
-                method: 'GET'
+        }, [state]),
+        deleteIngredient: useCallback(async function (ingredient) {
+            await apiFetch('/ingredients/' + ingredient.id, {
+                method: 'DELETE'
             })
             dispatch({ type: 'DELETE_INGREDIENT', payload: ingredient })
-        },
-        updateIngredient: async function (ingredient, data) {
+        }, []),
+        updateIngredient: useCallback(async function (ingredient, data) {
             const newIngredient = await apiFetch('/ingredients/' + ingredient.id, {
                 method: 'PUT',
                 body: data
             })
             dispatch({ type: 'UPDATE_INGREDIENT', payload: newIngredient, target: ingredient })
-        },
-        createIngredient: async function (data) {
+        }, []),
+        createIngredient: useCallback(async function (data) {
             const newIngredient = await apiFetch('/ingredients', {
                 method: 'POST',
                 body: data
             })
             dispatch({ type: 'ADD_INGREDIENT', payload: newIngredient })
-        }
+        }, [])
     }
 
 }
