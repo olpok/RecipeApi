@@ -67,6 +67,14 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
+### App recettes de cuisine, permettant de persister les recettes sur un server 
+
+React
+
+CRUD Recettes et Ingrédients
+
+Systéme de connexion utilisant les cookies
+
 ### Structure
 
 App
